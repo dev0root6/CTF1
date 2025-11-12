@@ -14,7 +14,7 @@ jobs:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      PROJECT_KEY: Moonshotedx-ship-ee  # change this to match your SonarQube project key
+      PROJECT_KEY: test  # change this to match your SonarQube project key
 
     steps:
       - uses: actions/checkout@v4
