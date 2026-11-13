@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mission 6 · Find the insider</title>
+<meta name="description" content="Correlate DHCP, checkout and badge records to find the insider.">
+<meta name="theme-color" content="#0b0e13">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script type="module" src="assets/ctf.js"></script>
+</head>
+<body data-mission="6">
+<noscript><div class="noscript">This CTF needs JavaScript enabled to verify answers.</div></noscript>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/mark.svg" alt="" width="38" height="38">
+      <span class="brand-text">
+        <span class="brand-name">The Codebreakers</span>
+        <span class="brand-sub">Operation Glass Key · Beginner forensics CTF</span>
+      </span>
+    </a>
+    <div class="locker-wrap">
+      <button class="locker-btn" id="locker-btn" type="button" aria-expanded="false" aria-controls="locker">Flags <span data-count>0/8</span></button>
+      <div class="locker" id="locker" hidden>
+        <h2>Evidence locker</h2>
+        <ul class="locker-list" data-locker-list></ul>
+      </div>
+    </div>
+  </div>
+</header>
+<nav class="stepper" id="stepper" aria-label="Mission progress"></nav>
+
+<main>
+  <div class="wrap layout">
+    <article>
+      <p class="eyebrow">Mission 06 · Logic & correlation</p>
+      <h1>Find the insider</h1>
+      <p class="lede">The download came from inside the office network. Four employees are on the suspect list. Line up the records and find out who was really at the keyboard.</p>
+      <div class="section prose">
+        <p>You'll need the <strong>IP address</strong> and the <strong>download time</strong> from Mission 5. All records are from 14 October. Work through them in order; each one narrows the list.</p>
+      </div>
+      <div class="evidence">
+        <div class="evidence-head"><span>A · Router DHCP leases</span><span class="tag">Which device had which IP</span></div>
+        <div class="table-scroll"><table class="data"><thead><tr><th>IP address</th><th>Device</th><th>Lease start</th><th>Lease end</th></tr></thead><tbody><tr><td class="mono">10.0.4.11</td><td class="mono">LAPTOP-IT-04</td><td class="mono">09:12</td><td class="mono">23:59</td></tr><tr><td class="mono">10.0.4.17</td><td class="mono">DESKTOP-OPS-02</td><td class="mono">08:45</td><td class="mono">23:59</td></tr><tr><td class="mono">10.0.4.23</td><td class="mono">DESKTOP-FIN-01</td><td class="mono">08:02</td><td class="mono">18:15</td></tr><tr><td class="mono">10.0.4.23</td><td class="mono">LAPTOP-HR-02</td><td class="mono">21:22</td><td class="mono">23:58</td></tr><tr><td class="mono">10.0.4.31</td><td class="mono">PRINTER-2F</td><td class="mono">00:00</td><td class="mono">23:59</td></tr></tbody></table></div>
+      </div>
+      <div class="evidence">
+        <div class="evidence-head"><span>B · Shared laptop sign-out sheet</span><span class="tag">Front desk</span></div>
+        <div class="table-scroll"><table class="data"><thead><tr><th>Device</th><th>Checked out to</th><th>Out</th><th>Returned</th></tr></thead><tbody><tr><td class="mono">LAPTOP-HR-02</td><td>Kabir</td><td class="mono">13:05</td><td class="mono">17:30</td></tr><tr><td class="mono">LAPTOP-HR-05</td><td>Rohan</td><td class="mono">20:55</td><td class="mono">22:05</td></tr><tr><td class="mono">LAPTOP-HR-02</td><td>Meera</td><td class="mono">21:10</td><td class="mono">—</td></tr></tbody></table></div>
+      </div>
+      <div class="evidence">
+        <div class="evidence-head"><span>C · Badge reader, main door</span><span class="tag">Last entry / exit</span></div>
+        <div class="table-scroll"><table class="data"><thead><tr><th>Employee</th><th>Department</th><th>Entry</th><th>Exit</th></tr></thead><tbody><tr><td>Asha</td><td>Finance</td><td class="mono">08:00</td><td class="mono">18:20</td></tr><tr><td>Kabir</td><td>HR</td><td class="mono">09:30</td><td class="mono">17:45</td></tr><tr><td>Rohan</td><td>IT</td><td class="mono">20:40</td><td class="mono">22:10</td></tr><tr><td>Meera</td><td>Design</td><td class="mono">21:05</td><td class="mono">23:40</td></tr></tbody></table></div>
+      </div>
+      <div class="evidence">
+        <div class="evidence-head"><span>D · Interview statements</span><span class="tag">Unverified</span></div>
+        <div style="padding:16px">
+          <p class="statement"><b>Asha:</b> “I left right after work. My desktop shuts itself down at six.”</p>
+          <p class="statement"><b>Kabir:</b> “I only borrowed the HR laptop for an afternoon meeting.”</p>
+          <p class="statement"><b>Rohan:</b> “I came back to fix the printer and was gone by ten past ten.”</p>
+          <p class="statement" style="margin-bottom:0"><b>Meera:</b> “I wasn't in the office that night. I went home around nine.”</p>
+        </div>
+      </div>
+
+      <form class="answer" id="answer-form" novalidate>
+        <h2>Name the insider</h2>
+        <p class="help">Who downloaded the file, and on which device?</p>
+        <div class="fields cols-2">
+          <div class="field">
+            <label>Employee name<input class="answer-field" type="text" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="first name"></label>
+          </div>
+          <div class="field">
+            <label>Device name<input class="answer-field" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. DESKTOP-OPS-02"></label>
+          </div>
+        </div>
+        <div class="form-row">
+          <button class="btn btn-primary" type="submit">Submit answer</button>
+          <p class="feedback" id="feedback" role="status"></p>
+        </div>
+      </form>
+
+      <section class="reward" id="reward" hidden aria-live="polite">
+        <p class="eyebrow">Flag captured</p>
+        <div class="flag-line"><code data-flag></code><button class="btn btn-ghost btn-sm" type="button" data-copy>Copy</button></div>
+        <p class="note" data-note></p>
+        <a class="btn btn-primary" data-next href="#">Next mission →</a>
+      </section>
+
+    </article>
+
+    <aside class="casefile" aria-label="Case file">
+      <div class="card">
+        <h2>Case file</h2>
+        <dl class="meta">
+          <dt>Category</dt><dd>Logic & correlation</dd>
+          <dt>Level</dt><dd><span class="chip beginner">Beginner</span></dd>
+          <dt>Skills</dt><dd class="chips"><span class="chip">Timelines</span><span class="chip">DHCP</span><span class="chip">Alibis</span></dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Hints</h2>
+          <details class="hint"><summary>Hint 1</summary><p>The same IP was handed to two different devices that day. Which one held it at the download time?</p></details>
+          <details class="hint"><summary>Hint 2</summary><p>Now find who had that device at that moment on the sign-out sheet.</p></details>
+          <details class="hint"><summary>Hint 3</summary><p>Check the badge log. Whose statement doesn't match the records?</p></details>
+      </div>
+      <div class="card">
+        <h2>Tools</h2>
+        <ul class="tools">
+          <li>Pen and paper<span>Draw a timeline from 21:00 to 23:59</span></li>
+          <li><a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol" target="_blank" rel="noopener">What is DHCP?</a><span>Why IPs change hands</span></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</main>
+<script type="application/json" id="vault">{"v":1,"iter":200000,"salt":"nQep9B0VzajJ0+sKAX7K0Q==","items":[{"iv":"BCGe99aQ5CBVk/PW","ct":"gEXlcbcp/Cws3c0BZDG81MXIEvPrlsM57QdthE50qI3zHH44IfbA/W7gXYOo62wqvYv/L1xWiEasTfyqZ1s4WcoIaGwXhvh63nHU9gTTDVh2SgaoZORlEQm1QZ59JDw5F4HmqzPhG8y03H2Rbqx/l0E8utB6tM9ds8Eo2lf03n84fQM5nD8XKxB8djkZqL3de9wf1GwbKtoKyNRDrt3NQREPKwDXZ07RiBoM3XwaUuColoqPjNNk"}]}</script>
+
+<footer class="footer">
+  <div class="wrap">
+    <span>The Codebreakers CTF · Beginner track</span>
+    <span>All people and companies in this story are fictional.</span>
+  </div>
+</footer>
+</body>
+</html>

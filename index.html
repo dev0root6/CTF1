@@ -1,133 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Codebreakers - Mission 1</title>
-    <style>
-        @keyframes pulse-glow {
-            0% {
-                box-shadow: 0 0 5px rgba(0, 255, 0, 0.4), 0 0 10px rgba(0, 255, 0, 0.2);
-            }
-            50% {
-                box-shadow: 0 0 20px rgba(0, 255, 0, 0.6), 0 0 30px rgba(0, 255, 0, 0.4);
-            }
-            100% {
-                box-shadow: 0 0 5px rgba(0, 255, 0, 0.4), 0 0 10px rgba(0, 255, 0, 0.2);
-            }
-        }
-        
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #0d0d0d;
-            background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #E0E0E0;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            position: relative; /* Essential for positioning the logos */
-        }
-
-        .container {
-            background-color: rgba(30, 30, 30, 0.9);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
-            animation: pulse-glow 3s infinite ease-in-out;
-            max-width: 800px;
-            width: 100%;
-            border: 1px solid #00FF00;
-        }
-        
-        h1, h2 {
-            text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00;
-        }
-
-        h1 {
-            color: #00FF00;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        h2 {
-            color: #00CC00;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-        .mission-briefing {
-            background-color: #2D2D2D;
-            padding: 20px;
-            border-left: 3px solid #00FF00;
-            text-align: left;
-            margin-bottom: 30px;
-        }
-        .logo {
-            
-            height: auto;
-            filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.6));
-            position: absolute; /* Allows for precise corner placement */
-        }
-        .logo1 {
-            width: 300px;
-            top: 20px;
-            left: 20px;
-        }
-        .logo2 {
-            width: 110px;
-            top: 20px;
-            right: 20px;
-        }
-        .qr-code-container {
-            margin: 20px 0;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-        }
-        .qr-code-container img {
-            max-width: 100%;
-            height: auto;
-            border: 2px solid #00CC00;
-            border-radius: 5px;
-            box-shadow: 0 0 10px #00FF00;
-            transition: box-shadow 0.3s ease-in-out;
-        }
-        .qr-code-container:hover img {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px #00FF00, 0 0 30px #00FF00;
-        }
-        .flag {
-            color: #FFD700;
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-top: 20px;
-            text-shadow: 0 0 5px #FFD700;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Codebreakers</title>
+<meta name="description" content="A beginner-friendly digital forensics CTF.">
+<meta name="theme-color" content="#0b0e13">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script type="module" src="assets/ctf.js"></script>
 </head>
-<body>
-    <img src="logo1.png" alt="Logo 1" class="logo logo1">
-    <img src="logo2.png" alt="Logo 2" class="logo logo2">
+<body data-mission="1" data-flag="FLAG{Case_File_Opened}">
+<noscript><div class="noscript">This CTF needs JavaScript enabled to verify answers.</div></noscript>
 
-    <div class="container">
-        <h1>Welcome, Agent!</h1>
-        <h2>The Codebreakers: Mission 1</h2>
-
-        <div class="mission-briefing">
-            <p><strong>Mission Briefing:</strong></p>
-            <p>Your journey begins now. This QR code contains a hidden URL for your next mission. Scan it or click the image to proceed.</p>
-        </div>
-        
-        <a href="https://dev-0618.github.io/CTF1/2Decipher.html" class="qr-code-container">
-            <!-- Ensure your qrcode.png file is in the same directory as this index.html -->
-            <img src="qrcode.jpeg" alt="QR Code for Mission 2">
-        </a>
-        
-        <p class="flag">Your first flag: FLAG{Agent_Newbie_Activated}</p>
-
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/mark.svg" alt="" width="38" height="38">
+      <span class="brand-text">
+        <span class="brand-name">The Codebreakers</span>
+        <span class="brand-sub">Operation Glass Key · Beginner forensics CTF</span>
+      </span>
+    </a>
+    <div class="locker-wrap">
+      <button class="locker-btn" id="locker-btn" type="button" aria-expanded="false" aria-controls="locker">Flags <span data-count>0/8</span></button>
+      <div class="locker" id="locker" hidden>
+        <h2>Evidence locker</h2>
+        <ul class="locker-list" data-locker-list></ul>
+      </div>
     </div>
+  </div>
+</header>
+<nav class="stepper" id="stepper" aria-label="Mission progress"></nav>
 
+<main>
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Mission 01 · Briefing</p>
+        <h1>Operation Glass Key</h1>
+        <p class="lede">Last night, the designs for <strong>Project Glass Key</strong> were stolen from Kestrel Labs, a (fictional) hardware startup. You're the newest analyst on the digital forensics team. Follow the evidence across seven missions, crack each clue, and name the insider.</p>
+        <div class="card section">
+          <p class="eyebrow" style="margin-bottom:6px">Welcome flag</p>
+          <div class="flag-line" style="margin-bottom:0">
+            <code>FLAG{Case_File_Opened}</code>
+            <button class="btn btn-ghost btn-sm" type="button" data-copy-text="FLAG{Case_File_Opened}">Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="card qr-card">
+        <form class="name-form" data-name-form data-needs-name novalidate>
+          <p class="eyebrow">Sign in</p>
+          <h2>Who's on the case?</h2>
+          <p class="help">Enter your full name. It's saved only in this browser and printed on your certificate when you finish.</p>
+          <div class="field">
+            <label>Full name<input type="text" name="fullname" autocomplete="name" maxlength="60" spellcheck="false" placeholder="e.g. Alex Rivera"></label>
+          </div>
+          <div class="form-row">
+            <button class="btn btn-primary" type="submit">Accept the case</button>
+            <p class="feedback" role="status"></p>
+          </div>
+        </form>
+        <div data-has-name hidden>
+          <p class="agent-line">Agent <strong data-agent-name></strong>, your first assignment is ready.</p>
+          <img src="assets/qr-mission2.png" alt="QR code linking to Mission 2" width="240" height="240">
+          <p>Scan the QR code or use the button.</p>
+          <a class="btn btn-primary" href="m2-4f7a1c.html">Start Mission 2 →</a>
+          <p><button class="link-btn" type="button" data-change-name>Not you? Change name</button></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="rules" aria-label="How it works">
+      <div class="card">
+        <h3>Flags</h3>
+        <p>Each solved mission reveals a flag in the form <code>FLAG{...}</code>. Collected flags are kept in the <strong>Flags</strong> locker at the top right.</p>
+      </div>
+      <div class="card">
+        <h3>Answers</h3>
+        <p>Answers aren't case-sensitive, and spaces, underscores and hyphens count as the same thing. Press Enter or Submit to check.</p>
+      </div>
+      <div class="card">
+        <h3>Stuck?</h3>
+        <p>Every mission has a case file with hints that reveal one at a time, plus links to free tools. No installs needed.</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <span>The Codebreakers CTF · Beginner track</span>
+    <span>All people and companies in this story are fictional.</span>
+  </div>
+</footer>
 </body>
 </html>

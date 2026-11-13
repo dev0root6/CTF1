@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mission 8 · Case closed</title>
+<meta name="description" content="Final debrief for Operation Glass Key.">
+<meta name="theme-color" content="#0b0e13">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script type="module" src="assets/ctf.js"></script>
+</head>
+<body data-mission="8" data-final>
+<noscript><div class="noscript">This CTF needs JavaScript enabled to verify answers.</div></noscript>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/mark.svg" alt="" width="38" height="38">
+      <span class="brand-text">
+        <span class="brand-name">The Codebreakers</span>
+        <span class="brand-sub">Operation Glass Key · Beginner forensics CTF</span>
+      </span>
+    </a>
+    <div class="locker-wrap">
+      <button class="locker-btn" id="locker-btn" type="button" aria-expanded="false" aria-controls="locker">Flags <span data-count>0/8</span></button>
+      <div class="locker" id="locker" hidden>
+        <h2>Evidence locker</h2>
+        <ul class="locker-list" data-locker-list></ul>
+      </div>
+    </div>
+  </div>
+</header>
+<nav class="stepper" id="stepper" aria-label="Mission progress"></nav>
+
+<main>
+  <div class="wrap" style="max-width:820px">
+    <p class="eyebrow">Mission 08 · Debrief</p>
+    <h1>Case closed</h1>
+    <p class="lede">The stolen archive was locked with a password. You found it in the photo's metadata. Use it to open the final case file.</p>
+
+    <form class="answer" id="answer-form" novalidate>
+      <h2>Unlock the case file</h2>
+      <p class="help">Enter the message you decoded in Mission 7.</p>
+      <div class="fields">
+          <div class="field">
+            <label>Archive password<input class="answer-field" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="from mission 7"></label>
+          </div>
+      </div>
+      <div class="form-row">
+        <button class="btn btn-primary" type="submit">Open case file</button>
+        <p class="feedback" id="feedback" role="status"></p>
+      </div>
+    </form>
+
+    <section class="reward" id="reward" hidden aria-live="polite">
+      <p class="eyebrow">Final flag</p>
+      <div class="flag-line"><code data-flag></code><button class="btn btn-ghost btn-sm" type="button" data-copy>Copy</button></div>
+      <p class="note" data-note></p>
+      <div class="prose section" data-summary></div>
+      <h2>Your evidence locker</h2>
+      <ul class="locker-list" data-locker-list></ul>
+    </section>
+
+    <section class="certificate" id="certificate" hidden aria-label="Certificate">
+      <h2>Your certificate</h2>
+      <form class="name-form card" data-name-form data-needs-name hidden novalidate>
+        <p class="help">Enter your full name as it should appear on the certificate. It's saved only in this browser.</p>
+        <div class="field">
+          <label>Full name<input type="text" name="fullname" autocomplete="name" maxlength="60" spellcheck="false" placeholder="e.g. Alex Rivera"></label>
+        </div>
+        <div class="form-row">
+          <button class="btn btn-primary" type="submit">Create certificate</button>
+          <p class="feedback" role="status"></p>
+        </div>
+      </form>
+      <div data-has-name hidden>
+        <canvas class="cert-canvas" width="1600" height="1130" role="img" aria-label="Certificate of completion"></canvas>
+        <div class="form-row">
+          <a class="btn btn-primary" data-cert-download href="#" download>Download certificate (PNG)</a>
+          <button class="btn btn-ghost" type="button" data-change-name>Edit name</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<script type="application/json" id="vault">{"v":1,"iter":200000,"salt":"LdwgV7qUG1pP2fYjPEqXRw==","items":[{"iv":"bsssmRlUCAd/bS6k","ct":"GJUFbzWvg9LIexAuBtRW0WTHgw4FFsIhUvlEwbAFXDz0PqevqWB0vDc4eprTzz1Kk+sgmiKTxN/YUWcsalvYGXJXmKGnxaRgJYYIuGFq3P0ALLedjbW8tYs2jeJIC7yxFbuGQUlVAtMMj5K97BKVy5SzLRdbA2utBymrl9okTLPAIaOA50G7tDoSQ2SyyF6NKz7FWeYSxAK9YnSOdBpA+LO9M+LET9PeB5kQKDz4tioEKvyjQXB9GzecPnbOuYHg4DQsob74Tsu6zw36BwC8zAOpziatn5FaIB76oSRUzKENBv679ZzLLlbHnCqiX06WKmlsFIN3p6j1OA3RNgtXTCSYA6yHnS2BJsebhHZqn0W57f/O2e/D5nTX/9r3nBznY/xmKxK/0DmKWfkQ7uR8ZuqgNIj2wv1NL6o0XW0bF4XUMBTvF41tDaQOnpgTaN/gDG3w7YC9O+b15ZNxqQJJVnsAO6c/lveFuLVrCED/VeC+5PIPnDamS7XivSyP8JhArba4JrhmZUvtMkMV/gTAn7k1qgASeILLw9HfHt5ijiYYF0nLpTfto9zU0HcKu2jXKViEDJIvM3FHDZ1YcLUHJ1rILMN0MGNzsj50+Cm4XwaNC+rlCOrKV1CHLiwVFCAeum1W/s5UQahjXSZaYYYf0oKCYriWyR4jkN6+ONyZOkX/6iVvt/lzCMSu0UMBFwjkCDSdWbCtWrLAZ+7uBq9sli4uuhIzZsgtGJm56pyX95e8rVjZg2B3GbtgRmyGL4yzo5CnGER0oVIrfjnL6EhyNqpe21rdl6t0c5c0vWLEcK1DjXfBMUfXsGtl6SsJsw=="}]}</script>
+
+<footer class="footer">
+  <div class="wrap">
+    <span>The Codebreakers CTF · Beginner track</span>
+    <span>All people and companies in this story are fictional.</span>
+  </div>
+</footer>
+</body>
+</html>

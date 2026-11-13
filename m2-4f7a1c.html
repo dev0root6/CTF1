@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mission 2 · The intercepted note</title>
+<meta name="description" content="Decode a Caesar-shifted note.">
+<meta name="theme-color" content="#0b0e13">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script type="module" src="assets/ctf.js"></script>
+</head>
+<body data-mission="2">
+<noscript><div class="noscript">This CTF needs JavaScript enabled to verify answers.</div></noscript>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/mark.svg" alt="" width="38" height="38">
+      <span class="brand-text">
+        <span class="brand-name">The Codebreakers</span>
+        <span class="brand-sub">Operation Glass Key · Beginner forensics CTF</span>
+      </span>
+    </a>
+    <div class="locker-wrap">
+      <button class="locker-btn" id="locker-btn" type="button" aria-expanded="false" aria-controls="locker">Flags <span data-count>0/8</span></button>
+      <div class="locker" id="locker" hidden>
+        <h2>Evidence locker</h2>
+        <ul class="locker-list" data-locker-list></ul>
+      </div>
+    </div>
+  </div>
+</header>
+<nav class="stepper" id="stepper" aria-label="Mission progress"></nav>
+
+<main>
+  <div class="wrap layout">
+    <article>
+      <p class="eyebrow">Mission 02 · Cryptography</p>
+      <h1>The intercepted note</h1>
+      <p class="lede">Security caught a note being passed between two employees on the night the files went missing. It's scrambled, but not very well.</p>
+      <div class="evidence">
+        <div class="evidence-head"><span>note_1014.txt</span><span class="tag">Intercepted</span></div>
+        <div class="cipher">HMJHP YMJ GQFSP UFLJ</div>
+      </div>
+      <div class="section prose">
+        <p>This is a <strong>Caesar cipher</strong>: every letter was moved forward by the same number of places in the alphabet. With a shift of 3, <code>A</code> becomes <code>D</code> and <code>B</code> becomes <code>E</code>.</p>
+        <p>Shift the letters back to read the message.</p>
+      </div>
+
+      <form class="answer" id="answer-form" novalidate>
+        <h2>Decoded message</h2>
+        <p class="help">Type the plain-text message exactly as it reads.</p>
+        <div class="fields">
+          <div class="field">
+            <label>Message<input class="answer-field" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. MEET AT NOON"></label>
+          </div>
+        </div>
+        <div class="form-row">
+          <button class="btn btn-primary" type="submit">Submit answer</button>
+          <p class="feedback" id="feedback" role="status"></p>
+        </div>
+      </form>
+
+      <section class="reward" id="reward" hidden aria-live="polite">
+        <p class="eyebrow">Flag captured</p>
+        <div class="flag-line"><code data-flag></code><button class="btn btn-ghost btn-sm" type="button" data-copy>Copy</button></div>
+        <p class="note" data-note></p>
+        <a class="btn btn-primary" data-next href="#">Next mission →</a>
+      </section>
+
+    </article>
+
+    <aside class="casefile" aria-label="Case file">
+      <div class="card">
+        <h2>Case file</h2>
+        <dl class="meta">
+          <dt>Category</dt><dd>Cryptography</dd>
+          <dt>Level</dt><dd><span class="chip beginner">Beginner</span></dd>
+          <dt>Skills</dt><dd class="chips"><span class="chip">Caesar cipher</span><span class="chip">Brute force</span></dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Hints</h2>
+          <details class="hint"><summary>Hint 1</summary><p>There are only 25 possible shifts. A decoder can try every one at once.</p></details>
+          <details class="hint"><summary>Hint 2</summary><p>The shift is the number of fingers on one hand.</p></details>
+          <details class="hint"><summary>Hint 3</summary><p>The message tells you where to look in the next mission.</p></details>
+      </div>
+      <div class="card">
+        <h2>Tools</h2>
+        <ul class="tools">
+          <li><a href="https://www.dcode.fr/caesar-cipher" target="_blank" rel="noopener">dCode: Caesar cipher</a><span>Shows all 25 shifts at once</span></li>
+          <li><a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener">CyberChef</a><span>Use the ROT13 recipe and change the amount</span></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</main>
+<script type="application/json" id="vault">{"v":1,"iter":200000,"salt":"9DWLja+RMOe5PPu9h+r58g==","items":[{"iv":"8C3zj67eQRPPbWbz","ct":"RdaWLmoWKCkQE/kirzUF93QhVjB1mrlPpyLrQzOeyQqSRs5i8MqSy7HEbOD09oWyP93NG85Bc6/afKnRxoYaiAOem9D2Bpdc8h0ksfMqmjhQkLm/6dsrwx94PSY9vKpbQj/6WtkOhDN3WcSweh62UV3BAZSynrK50P+voXwOd4qDoo0wqU2NlrryyJDj7U3FlgtSTo5Envb2mkIk8A=="}]}</script>
+
+<footer class="footer">
+  <div class="wrap">
+    <span>The Codebreakers CTF · Beginner track</span>
+    <span>All people and companies in this story are fictional.</span>
+  </div>
+</footer>
+</body>
+</html>

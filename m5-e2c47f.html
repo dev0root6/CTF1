@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mission 5 · The access log</title>
+<meta name="description" content="Read a web server log and URL-decode a request.">
+<meta name="theme-color" content="#0b0e13">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script type="module" src="assets/ctf.js"></script>
+</head>
+<body data-mission="5">
+<noscript><div class="noscript">This CTF needs JavaScript enabled to verify answers.</div></noscript>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/mark.svg" alt="" width="38" height="38">
+      <span class="brand-text">
+        <span class="brand-name">The Codebreakers</span>
+        <span class="brand-sub">Operation Glass Key · Beginner forensics CTF</span>
+      </span>
+    </a>
+    <div class="locker-wrap">
+      <button class="locker-btn" id="locker-btn" type="button" aria-expanded="false" aria-controls="locker">Flags <span data-count>0/8</span></button>
+      <div class="locker" id="locker" hidden>
+        <h2>Evidence locker</h2>
+        <ul class="locker-list" data-locker-list></ul>
+      </div>
+    </div>
+  </div>
+</header>
+<nav class="stepper" id="stepper" aria-label="Mission progress"></nav>
+
+<main>
+  <div class="wrap layout">
+    <article>
+      <p class="eyebrow">Mission 05 · Log analysis</p>
+      <h1>The access log</h1>
+      <p class="lede">On 14 October, confidential project files were downloaded from Kestrel Labs' internal file portal. This is the portal's web server log for that evening.</p>
+      <div class="section prose">
+        <p>Each line is one request: the <strong>client IP</strong>, the <strong>time</strong>, the <strong>request</strong> (method and path), the <strong>status code</strong>, and the response size in bytes. Status <code>401</code> means a login was rejected; <code>200</code> means it worked.</p>
+      </div>
+      <div class="evidence">
+        <div class="evidence-head"><span>/var/log/nginx/portal_access.log</span><span class="tag">16 lines</span></div>
+        <pre>10.0.4.11 - - [14/Oct/2025:22:31:02 +0530] "GET /portal/ HTTP/1.1" 200 4120
+10.0.4.11 - - [14/Oct/2025:22:31:09 +0530] "POST /portal/login HTTP/1.1" 401 312
+10.0.4.11 - - [14/Oct/2025:22:31:18 +0530] "POST /portal/login HTTP/1.1" 200 298
+10.0.4.17 - - [14/Oct/2025:22:33:40 +0530] "GET /portal/files/download?name=Weekly%20Report%20W41%2Epdf HTTP/1.1" 200 482210
+10.0.4.23 - - [14/Oct/2025:22:38:11 +0530] "POST /portal/login HTTP/1.1" 401 312
+10.0.4.23 - - [14/Oct/2025:22:38:13 +0530] "POST /portal/login HTTP/1.1" 401 312
+10.0.4.23 - - [14/Oct/2025:22:38:15 +0530] "POST /portal/login HTTP/1.1" 401 312
+10.0.4.23 - - [14/Oct/2025:22:38:17 +0530] "POST /portal/login HTTP/1.1" 401 312
+10.0.4.23 - - [14/Oct/2025:22:38:20 +0530] "POST /portal/login HTTP/1.1" 401 312
+10.0.4.31 - - [14/Oct/2025:22:40:02 +0530] "GET /portal/status HTTP/1.1" 200 88
+10.0.4.23 - - [14/Oct/2025:22:41:30 +0530] "POST /portal/login HTTP/1.1" 401 312
+10.0.4.23 - - [14/Oct/2025:22:41:33 +0530] "POST /portal/login HTTP/1.1" 401 312
+10.0.4.23 - - [14/Oct/2025:22:44:52 +0530] "POST /portal/login HTTP/1.1" 200 298
+10.0.4.23 - - [14/Oct/2025:22:45:10 +0530] "GET /portal/files/ HTTP/1.1" 200 9133
+10.0.4.23 - - [14/Oct/2025:22:47:09 +0530] "GET /portal/files/download?name=Project%20Glass%20Key%2Ezip HTTP/1.1" 200 50541773
+10.0.4.17 - - [14/Oct/2025:22:52:30 +0530] "GET /portal/logout HTTP/1.1" 302 0</pre>
+      </div>
+      <div class="section prose">
+        <p>Find the device that kept guessing passwords until it got in, and work out which file it took.</p>
+      </div>
+
+      <form class="answer" id="answer-form" novalidate>
+        <h2>Your findings</h2>
+        <p class="help">Write the file name decoded, the way a person would read it.</p>
+        <div class="fields cols-2">
+          <div class="field">
+            <label>Attacker IP address<input class="answer-field" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. 192.168.1.10"></label>
+          </div>
+          <div class="field">
+            <label>Downloaded file name<input class="answer-field" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. notes.txt"></label>
+          </div>
+        </div>
+        <div class="form-row">
+          <button class="btn btn-primary" type="submit">Submit answer</button>
+          <p class="feedback" id="feedback" role="status"></p>
+        </div>
+      </form>
+
+      <section class="reward" id="reward" hidden aria-live="polite">
+        <p class="eyebrow">Flag captured</p>
+        <div class="flag-line"><code data-flag></code><button class="btn btn-ghost btn-sm" type="button" data-copy>Copy</button></div>
+        <p class="note" data-note></p>
+        <a class="btn btn-primary" data-next href="#">Next mission →</a>
+      </section>
+
+    </article>
+
+    <aside class="casefile" aria-label="Case file">
+      <div class="card">
+        <h2>Case file</h2>
+        <dl class="meta">
+          <dt>Category</dt><dd>Log analysis</dd>
+          <dt>Level</dt><dd><span class="chip beginner">Beginner</span></dd>
+          <dt>Skills</dt><dd class="chips"><span class="chip">Access logs</span><span class="chip">URL encoding</span></dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Hints</h2>
+          <details class="hint"><summary>Hint 1</summary><p>Look for one IP with several 401 responses in a row, followed by a 200.</p></details>
+          <details class="hint"><summary>Hint 2</summary><p>Web addresses can't contain spaces, so they're URL-encoded: %20 is a space and %2E is a dot.</p></details>
+          <details class="hint"><summary>Hint 3</summary><p>Copy only the part after name= into a URL decoder.</p></details>
+      </div>
+      <div class="card">
+        <h2>Tools</h2>
+        <ul class="tools">
+          <li><a href="https://gchq.github.io/CyberChef/#recipe=URL_Decode()" target="_blank" rel="noopener">CyberChef: URL Decode</a><span>Paste the encoded text into Input</span></li>
+          <li><a href="https://www.urldecoder.org/" target="_blank" rel="noopener">URL Decoder</a><span>Simple one-box decoder</span></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</main>
+<script type="application/json" id="vault">{"v":1,"iter":200000,"salt":"fqvttFi/A4uO+iEZmQx+xQ==","items":[{"iv":"7VQz9n4sbRKuv11m","ct":"e5V3HMP4ov0+7WpOd9fsmY0YlmlxtCIJEMB8u8pXOjATTxNhF5ffPkG6jeBm6QLTrhJAP1J5o59kUKVKJYX9Uq1POYiImgwv39NDdQq6J0ycoZVLSPIR3MIPh6jgCIAs1yBqwZ3y9dUsEb2+kEJKMURXUConOpithCLl0OIno/aahI1FVh+pSLlzWG4cB8dsFPlrbZk5sFpRJtb0VTo8mXvielwE4fYRf1xh8/7xXJdQJxJsu9ZLOYLkxqsBi4RPHXXCpDn256c="}]}</script>
+
+<footer class="footer">
+  <div class="wrap">
+    <span>The Codebreakers CTF · Beginner track</span>
+    <span>All people and companies in this story are fictional.</span>
+  </div>
+</footer>
+</body>
+</html>

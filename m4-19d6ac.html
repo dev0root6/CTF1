@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mission 4 · Files in disguise</title>
+<meta name="description" content="Identify files by their magic bytes.">
+<meta name="theme-color" content="#0b0e13">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script type="module" src="assets/ctf.js"></script>
+</head>
+<body data-mission="4">
+<noscript><div class="noscript">This CTF needs JavaScript enabled to verify answers.</div></noscript>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/mark.svg" alt="" width="38" height="38">
+      <span class="brand-text">
+        <span class="brand-name">The Codebreakers</span>
+        <span class="brand-sub">Operation Glass Key · Beginner forensics CTF</span>
+      </span>
+    </a>
+    <div class="locker-wrap">
+      <button class="locker-btn" id="locker-btn" type="button" aria-expanded="false" aria-controls="locker">Flags <span data-count>0/8</span></button>
+      <div class="locker" id="locker" hidden>
+        <h2>Evidence locker</h2>
+        <ul class="locker-list" data-locker-list></ul>
+      </div>
+    </div>
+  </div>
+</header>
+<nav class="stepper" id="stepper" aria-label="Mission progress"></nav>
+
+<main>
+  <div class="wrap layout">
+    <article>
+      <p class="eyebrow">Mission 04 · File analysis</p>
+      <h1>Files in disguise</h1>
+      <p class="lede">Three files were recovered from the suspect's USB drive. Their names say one thing. Their contents say another.</p>
+      <div class="section prose">
+        <p>A file extension like <code>.txt</code> is just part of the name, and anyone can rename a file. The real type is written in the first few bytes of the file, known as its <strong>file signature</strong> or <strong>magic bytes</strong>.</p>
+        <p>Below are hex dumps of the first 32 bytes of each file. The left column is the offset, the middle is the bytes in hex, and the right column shows the same bytes as text.</p>
+      </div>
+      <div class="evidence">
+        <div class="evidence-head"><span>File 1: holiday_photo.txt</span><span class="tag">xxd</span></div>
+        <pre>00000000  89 50 4e 47 0d 0a 1a 0a  00 00 00 0d 49 48 44 52  |.PNG........IHDR|
+00000010  00 00 04 b0 00 00 03 20  08 06 00 00 00 e4 8c 3a  |....... .......:|</pre>
+      </div>
+      <div class="evidence">
+        <div class="evidence-head"><span>File 2: voice_note.mp3</span><span class="tag">xxd</span></div>
+        <pre>00000000  25 50 44 46 2d 31 2e 37  0a 25 e2 e3 cf d3 0a 31  |%PDF-1.7.%.....1|
+00000010  20 30 20 6f 62 6a 0a 3c  3c 2f 54 79 70 65 2f 43  | 0 obj.<</Type/C|</pre>
+      </div>
+      <div class="evidence">
+        <div class="evidence-head"><span>File 3: readme.jpg</span><span class="tag">xxd</span></div>
+        <pre>00000000  50 4b 03 04 14 00 00 00  08 00 a1 5b 4e 59 c2 7f  |PK.........[NY..|
+00000010  3d 11 6b 02 00 00 c0 05  00 00 08 00 00 00 70 6c  |=.k...........pl|</pre>
+      </div>
+
+      <form class="answer" id="answer-form" novalidate>
+        <h2>Real file types</h2>
+        <p class="help">Give the common short name of each format, e.g. GIF, MP4, EXE.</p>
+        <div class="fields cols-3">
+          <div class="field">
+            <label>File 1<input class="answer-field" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="type"></label>
+          </div>
+          <div class="field">
+            <label>File 2<input class="answer-field" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="type"></label>
+          </div>
+          <div class="field">
+            <label>File 3<input class="answer-field" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="type"></label>
+          </div>
+        </div>
+        <div class="form-row">
+          <button class="btn btn-primary" type="submit">Submit answer</button>
+          <p class="feedback" id="feedback" role="status"></p>
+        </div>
+      </form>
+
+      <section class="reward" id="reward" hidden aria-live="polite">
+        <p class="eyebrow">Flag captured</p>
+        <div class="flag-line"><code data-flag></code><button class="btn btn-ghost btn-sm" type="button" data-copy>Copy</button></div>
+        <p class="note" data-note></p>
+        <a class="btn btn-primary" data-next href="#">Next mission →</a>
+      </section>
+
+    </article>
+
+    <aside class="casefile" aria-label="Case file">
+      <div class="card">
+        <h2>Case file</h2>
+        <dl class="meta">
+          <dt>Category</dt><dd>File analysis</dd>
+          <dt>Level</dt><dd><span class="chip beginner">Beginner</span></dd>
+          <dt>Skills</dt><dd class="chips"><span class="chip">Magic bytes</span><span class="chip">Hex dumps</span></dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Hints</h2>
+          <details class="hint"><summary>Hint 1</summary><p>Read the right-hand text column of each dump. Two of the signatures are almost readable words.</p></details>
+          <details class="hint"><summary>Hint 2</summary><p>Compare the first four hex bytes with a table of known file signatures.</p></details>
+          <details class="hint"><summary>Hint 3</summary><p>Office files like .docx are ZIP archives too, but this file contains a plain .txt, so answer with the archive format.</p></details>
+      </div>
+      <div class="card">
+        <h2>Tools</h2>
+        <ul class="tools">
+          <li><a href="https://en.wikipedia.org/wiki/List_of_file_signatures" target="_blank" rel="noopener">List of file signatures</a><span>Wikipedia reference table</span></li>
+          <li><a href="https://www.garykessler.net/library/file_sigs.html" target="_blank" rel="noopener">Gary Kessler's signature table</a><span>The classic forensics reference</span></li>
+          <li>file (command line)<span>Linux/macOS: file suspicious.bin</span></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</main>
+<script type="application/json" id="vault">{"v":1,"iter":200000,"salt":"UUQvxQENSjgENTLUifdD4w==","items":[{"iv":"0JzAVDUnKfWo+KZa","ct":"oW271hW9QPjMxP9u4xu1edsfACOMib5mOf0dfjTquf8llGOX3NcrIfHdS2xbDWvDIwBhJmrtvrgLEcsThf2R6LYbZ9hF9lZWNd7+JF08pN1pBnNge5YO3bwc0fh+0NME7P/M7b9u+CRwFqbvh/NuXCv1kWy7Eu1hYjh2A+6I1qRMwonsrbXp3gPfz3Tlwl0ENDmkPaoEfA=="}]}</script>
+
+<footer class="footer">
+  <div class="wrap">
+    <span>The Codebreakers CTF · Beginner track</span>
+    <span>All people and companies in this story are fictional.</span>
+  </div>
+</footer>
+</body>
+</html>
