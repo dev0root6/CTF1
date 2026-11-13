@@ -28,7 +28,7 @@ try {
 }
 
 let failed = false;
-for (const [page, { answers, reward }] of Object.entries(config.pages)) {
+for (const [page, { answers, reward, raw = false }] of Object.entries(config.pages)) {
   const file = path.join(root, page);
   const html = await readFile(file, "utf8");
   if (!VAULT_RE.test(html)) {
@@ -36,7 +36,7 @@ for (const [page, { answers, reward }] of Object.entries(config.pages)) {
     failed = true;
     continue;
   }
-  const vault = await sealVault(answers, reward);
+  const vault = await sealVault(answers, reward, { raw });
   await writeFile(file, html.replace(VAULT_RE, (_, open, __, close) => `${open}${JSON.stringify(vault)}${close}`));
 
   if (check) {

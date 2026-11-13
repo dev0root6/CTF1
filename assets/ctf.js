@@ -489,7 +489,65 @@ function setupCopyButtons() {
   });
 }
 
+// ---------------------------------------------------------------- landing-page password gate
+
+function openBriefing(payload) {
+  document.querySelectorAll("[data-welcome-flag]").forEach((el) => (el.textContent = payload.flag));
+  document.querySelector("[data-copy-welcome]")?.addEventListener("click", (e) => copyText(payload.flag, e.currentTarget));
+  document.querySelectorAll("[data-start]").forEach((el) => (el.href = payload.next));
+  document.querySelectorAll("[data-start-qr]").forEach((el) => (el.src = payload.qr));
+
+  const data = store.read();
+  data.flags[1] = payload.flag;
+  data.pages[2] = payload.next;
+  data.gate = payload;
+  store.write(data);
+
+  document.getElementById("gate").hidden = true;
+  document.getElementById("briefing").hidden = false;
+  renderStepper();
+}
+
+function setupGate() {
+  const gate = document.getElementById("gate");
+  const vault = readVault();
+  if (!gate || !vault) return;
+  const saved = store.read().gate;
+  if (saved) {
+    openBriefing(saved);
+    return;
+  }
+  const form = document.getElementById("gate-form");
+  const input = document.getElementById("gate-password");
+  const feedback = document.getElementById("gate-feedback");
+  const button = form.querySelector("button[type=submit]");
+  input.focus();
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!input.value) return;
+    button.disabled = true;
+    button.textContent = "Checking…";
+    feedback.className = "feedback";
+    feedback.textContent = "";
+    const payload = await openVault(vault, [input.value]);
+    button.disabled = false;
+    button.textContent = "Unlock";
+    if (payload) {
+      input.value = "";
+      openBriefing(payload);
+      return;
+    }
+    feedback.className = "feedback is-err";
+    feedback.textContent = "Wrong password.";
+    input.select();
+    form.classList.remove("shake");
+    void form.offsetWidth;
+    form.classList.add("shake");
+  });
+}
+
 recordVisit();
+setupGate();
 setupNameForms();
 setupLocker();
 renderStepper();

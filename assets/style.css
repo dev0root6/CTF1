@@ -965,3 +965,36 @@ details.hint p {
   border: 1px solid var(--line);
   margin-bottom: 16px;
 }
+
+/* ---------- Landing password gate ---------- */
+
+.gate {
+  display: grid;
+  place-items: center;
+  min-height: 52vh;
+}
+
+.gate-card {
+  width: min(440px, 100%);
+  padding: 28px;
+}
+
+.gate-card img {
+  display: block;
+  margin-bottom: 18px;
+}
+
+.gate-card h1 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.gate-card .help {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 18px;
+}
+
+.gate-card .field {
+  margin-bottom: 16px;
+}

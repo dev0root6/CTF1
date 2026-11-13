@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="assets/style.css">
 <script type="module" src="assets/ctf.js"></script>
 </head>
-<body data-mission="1" data-flag="FLAG{Case_File_Opened}">
+<body data-mission="1">
 <noscript><div class="noscript">This CTF needs JavaScript enabled to verify answers.</div></noscript>
 
 <header class="topbar">
@@ -38,6 +38,23 @@
 
 <main>
   <div class="wrap">
+    <section class="gate" id="gate" aria-labelledby="gate-title">
+      <form class="card gate-card" id="gate-form" novalidate>
+        <img src="assets/mark.svg" alt="" width="48" height="48">
+        <p class="eyebrow">Restricted access</p>
+        <h1 id="gate-title">Enter the access password</h1>
+        <p class="help">This case file is classified. Enter the password you were given to open it.</p>
+        <div class="field">
+          <label>Password<input id="gate-password" type="password" autocomplete="current-password" spellcheck="false" autocapitalize="off" required></label>
+        </div>
+        <div class="form-row">
+          <button class="btn btn-primary" type="submit">Unlock</button>
+          <p class="feedback" id="gate-feedback" role="status"></p>
+        </div>
+      </form>
+    </section>
+
+    <div id="briefing" hidden>
     <section class="hero">
       <div>
         <p class="eyebrow">Mission 01 · Briefing</p>
@@ -46,8 +63,8 @@
         <div class="card section">
           <p class="eyebrow" style="margin-bottom:6px">Welcome flag</p>
           <div class="flag-line" style="margin-bottom:0">
-            <code>FLAG{Case_File_Opened}</code>
-            <button class="btn btn-ghost btn-sm" type="button" data-copy-text="FLAG{Case_File_Opened}">Copy</button>
+            <code data-welcome-flag></code>
+            <button class="btn btn-ghost btn-sm" type="button" data-copy-welcome>Copy</button>
           </div>
         </div>
       </div>
@@ -66,9 +83,9 @@
         </form>
         <div data-has-name hidden>
           <p class="agent-line">Agent <strong data-agent-name></strong>, your first assignment is ready.</p>
-          <img src="assets/qr-mission2.png" alt="QR code linking to Mission 2" width="240" height="240">
+          <img data-start-qr alt="QR code linking to Mission 2" width="240" height="240">
           <p>Scan the QR code or use the button.</p>
-          <a class="btn btn-primary" href="m2-4f7a1c.html">Start Mission 2 →</a>
+          <a class="btn btn-primary" data-start href="#">Start Mission 2 →</a>
           <p><button class="link-btn" type="button" data-change-name>Not you? Change name</button></p>
         </div>
       </div>
@@ -88,8 +105,10 @@
         <p>Every mission has a case file with hints that reveal one at a time, plus links to free tools. No installs needed.</p>
       </div>
     </section>
+    </div>
   </div>
 </main>
+<script type="application/json" id="vault">{"v":1,"iter":200000,"raw":true,"salt":"++x/f4wmWkzYKB4Tc1L1Pg==","items":[{"iv":"ZPLKBC8v/oJmFBgA","ct":"io5DZcI6qlEs4zeo4V7Dol6heF/O3RgFUkwd6je08WxFrz/1Hh8Qx124EtDho8FaE1XcAIk9MO1RSrUHR4UscJW7G0UdK11Lh8/8Y7gpBY3JOus/SALxWdDQRxvGe185aoVnti6ZNw=="}]}</script>
 
 <footer class="footer">
   <div class="wrap">

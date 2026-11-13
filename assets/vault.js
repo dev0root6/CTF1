@@ -44,22 +44,24 @@ async function deriveKey(answer, salt, iterations) {
 }
 
 // answers: array of accepted answers, each an array of field values.
-export async function sealVault(answers, payload, iterations = ITERATIONS) {
+// raw = true keeps answers exactly as typed (used for the case-sensitive site password).
+export async function sealVault(answers, payload, { iterations = ITERATIONS, raw = false } = {}) {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const plain = enc.encode(JSON.stringify(payload));
   const items = [];
   for (const fields of answers) {
-    const key = await deriveKey(normalizeAnswer(fields), salt, iterations);
+    const key = await deriveKey(raw ? fields.join("|") : normalizeAnswer(fields), salt, iterations);
     const iv = crypto.getRandomValues(new Uint8Array(12));
     const ct = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, plain));
     items.push({ iv: b64.encode(iv), ct: b64.encode(ct) });
   }
-  return { v: 1, iter: iterations, salt: b64.encode(salt), items };
+  return { v: 1, iter: iterations, raw: raw || undefined, salt: b64.encode(salt), items };
 }
 
 // Returns the decrypted payload, or null when the answer is wrong.
 export async function openVault(vault, fields) {
-  const key = await deriveKey(normalizeAnswer(fields), b64.decode(vault.salt), vault.iter);
+  const secret = vault.raw ? fields.join("|") : normalizeAnswer(fields);
+  const key = await deriveKey(secret, b64.decode(vault.salt), vault.iter);
   for (const item of vault.items) {
     try {
       const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64.decode(item.iv) }, key, b64.decode(item.ct));
